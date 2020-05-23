@@ -33,36 +33,105 @@ def webhook():
 
 # processing the request from dialogflow
 def processRequest(req):
-    # sessionID=req.get('responseId')
+
     result = req.get("queryResult")
-    # user_says=result.get("queryText")
-    # log.write_log(sessionID, "User Says: "+user_says)
+
+
     parameters = result.get("parameters")
-    Petal_length = parameters.get("number")
-    Petal_width = parameters.get("number1")
-    Sepal_length = parameters.get("number2")
-    Sepal_width = parameters.get("number3")
-    int_features = [Petal_length, Petal_width, Sepal_length, Sepal_width]
+
+    ######## Season
+    season = parameters.get("season")
+    if season == "Winter" :
+        season = -1
+    elif season == "Spring":
+        season = -0.33
+    elif season == "Summer":
+        season = 0.33
+    elif season == "Fall":
+        season = 1
+    else:
+        season = 1
+
+    ############ Age
+    age = parameters.get("age")
+    if (age>18 and age<36) :
+        age = 0
+    else :
+        age = 1
+
+    ############# disease
+    disease = parameters.get("disease")
+    if disease == 'Yes':
+        disease = 0
+    else:
+        disease = 1
+
+    ############# accident
+    accident = parameters.get("accident")
+    if accident == 'Yes':
+        accident = 0
+    else :
+        accident = 1
+
+    ############# surgery
+    surgery = parameters.get("surgery")
+    if surgery == 'Yes':
+        surgery = 0
+    else :
+        surgery = 1
+
+    ############# fever
+    fever = parameters.get("fever")
+    if fever == 'Less' :
+        fever = -1
+    elif fever == 'More' :
+        fever = 0
+    elif fever == 'No':
+        fever = 1
+    else:
+        fever = 1
+
+    ############# alcohol
+    alcohol = parameters.get("alcohol")
+    if alcohol == 'Yes':
+        alcohol = 0
+    else:
+        alcohol = 1
+
+    ############# smoke
+    smoke = parameters.get("smoke")
+    if smoke == 'Never':
+        smoke = -1
+    elif smoke == 'Occasional':
+        smoke = 0
+    else:
+        smoke = 1
+    ############# hourssit
+    hourssit = parameters.get("hourssit")
+    if hourssit <= 16:
+        hourssit = 0
+    else:
+        hourssit = 1
+
+    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, hourssit]
 
     final_features = [np.array(int_features)]
 
     intent = result.get("intent").get('displayName')
 
-    if (intent == 'IrisData'):
+    if (intent == 'Fertility'):
         prediction = model.predict(final_features)
 
         output = round(prediction[0], 2)
 
-        if (output == 0):
-            flowr = 'Setosa'
+        if (output == 'N'):
+            diagnosis = 'Normal'
 
-        if (output == 1):
-            flowr = 'Versicolour'
+        if (output == 'O'):
+            diagnosis = 'Altered'
 
-        if (output == 2):
-            flowr = 'Virginica'
 
-        fulfillmentText = "The Iris type seems to be..  {} !".format(flowr)
+        fulfillmentText = "The Iris type seems to be..  {} !".format(diagnosis)
         # log.write_log(sessionID, "Bot Says: "+fulfillmentText)
         return {
             "fulfillmentText": fulfillmentText
