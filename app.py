@@ -17,6 +17,7 @@ def hello():
 @app.route('/webhook', methods=['POST'])
 @cross_origin()
 def webhook():
+    print('I am in!')
     req = request.get_json(silent=True, force=True)
 
     # print("Request:")
@@ -35,7 +36,7 @@ def webhook():
 def processRequest(req):
 
     result = req.get("queryResult")
-
+    print('I am in!')
 
     parameters = result.get("parameters")
 
@@ -51,7 +52,8 @@ def processRequest(req):
         season = 1
     else:
         season = 1
-
+        
+    print(season)
     ############ Age
     age = parameters.get("age")
     if (age>18 and age<36) :
