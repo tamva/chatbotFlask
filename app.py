@@ -131,7 +131,7 @@ def processRequest(req):
             diagnosis = 'Altered'
 
 
-        fulfillmentText = "The Iris type seems to be..  {} !".format(diagnosis)
+        fulfillmentText = "The diagnosis seems to be  {} !".format(diagnosis)
         # log.write_log(sessionID, "Bot Says: "+fulfillmentText)
         return {
             "fulfillmentText": fulfillmentText
