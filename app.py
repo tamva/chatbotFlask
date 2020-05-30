@@ -18,6 +18,7 @@ def hello():
 @cross_origin()
 def webhook():
     print('I am in!')
+
     req = request.get_json(silent=True, force=True)
 
     # print("Request:")
@@ -109,13 +110,13 @@ def processRequest(req):
     else:
         smoke = 1
     ############# hourssit
-    # hourssit = parameters.get("hourssit")
-    # if hourssit <= 16:
-    #     hourssit = 0
-    # else:
-    #     hourssit = 1
+    hourssit = parameters.get("hourssit")
+    if hourssit <= 16:
+        hourssit = 0
+    else:
+        hourssit = 1
 
-    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, 16]
+    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, hourssit]
 
     final_features = [np.array(int_features)]
 
