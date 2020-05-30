@@ -43,6 +43,7 @@ def processRequest(req):
 
     ######## Season
     season = parameters.get("season")
+    print(season)
     if season == "Winter" :
         season = -1
     elif season == "Spring":
@@ -61,30 +62,31 @@ def processRequest(req):
         age = 0
     else :
         age = 1
-
+    print(age)
     ############# disease
     disease = parameters.get("disease")
     if disease == 'Yes':
         disease = 0
     else:
         disease = 1
-
+    print(disease)
     ############# accident
     accident = parameters.get("accident")
     if accident == 'Yes':
         accident = 0
     else :
         accident = 1
-
+    print(accident)
     ############# surgery
     surgery = parameters.get("surgery")
     if surgery == 'Yes':
         surgery = 0
     else :
         surgery = 1
-
+    print(surgery)
     ############# fever
     fever = parameters.get("fever")
+    print(fever)
     if fever == 'Less' :
         fever = -1
     elif fever == 'More' :
@@ -93,7 +95,7 @@ def processRequest(req):
         fever = 1
     else:
         fever = 1
-
+    print(fever)
     ############# alcohol
     alcohol = parameters.get("alcohol")
     if alcohol == 'Yes':
