@@ -7,12 +7,12 @@ from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn import metrics
 import pickle
 
-dig_df = pd.read_csv('C:/Users/athanasis/Desktop/Semester_B/Efarmoges/mathima/fertility_Diagnosis.csv', sep=',')
+dig_df = pd.read_csv('C:/Users/athanasis/Desktop/Semester_B/Efarmoges/mathima/fertility_Diagnosis.csv',header=None, sep=',')
 
 print(dig_df.head(3))
 print(dig_df.shape)
 
-feautures =  dig_df.iloc[:,:8]
+feautures =  dig_df.iloc[:,:9]
 label = dig_df.iloc[:,-1]
 
 
