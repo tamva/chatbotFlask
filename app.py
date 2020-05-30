@@ -109,13 +109,13 @@ def processRequest(req):
     else:
         smoke = 1
     ############# hourssit
-    hourssit = parameters.get("hourssit")
-    if hourssit <= 16:
-        hourssit = 0
-    else:
-        hourssit = 1
+    # hourssit = parameters.get("hourssit")
+    # if hourssit <= 16:
+    #     hourssit = 0
+    # else:
+    #     hourssit = 1
 
-    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, hourssit]
+    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, 16]
 
     final_features = [np.array(int_features)]
 
@@ -127,7 +127,7 @@ def processRequest(req):
         output = round(prediction[0], 2)
 
         if (output == 'N'):
-            diagnosis = 'Normal'
+            diagnosis = 'No rmal'
 
         if (output == 'O'):
             diagnosis = 'Altered'
