@@ -127,10 +127,10 @@ def processRequest(req):
     if (intent == 'Fertility'):
         prediction = model.predict(final_features)
 
-        output = round(prediction[0], 2)
+        output = prediction[0]
 
         if (output == 'N'):
-            diagnosis = 'No rmal'
+            diagnosis = 'Normal'
 
         if (output == 'O'):
             diagnosis = 'Altered'
