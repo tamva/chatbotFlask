@@ -4,7 +4,10 @@ from sklearn.metrics import classification_report, confusion_matrix,accuracy_sco
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score, cross_val_predict
-from sklearn import metrics
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.svm import SVC
+import matplotlib.pyplot as plt
 import pickle
 
 dig_df = pd.read_csv('C:/Users/athanasis/Desktop/Semester_B/Efarmoges/mathima/fertility_Diagnosis.csv',header=None, sep=',')
@@ -15,16 +18,70 @@ print(dig_df.shape)
 feautures =  dig_df.iloc[:,:9]
 label = dig_df.iloc[:,-1]
 
+rand_mod = []
+rand_prec = []
+rand_rec = []
 
-X_train, X_test, y_train, y_test = train_test_split(feautures, label, test_size=0.40)
+svm_mod = []
+svm_prec = []
+svm_rec = []
 
-clf = RandomForestClassifier(max_depth=14)
-clf.fit(X_train,y_train)
+for times in range(30):
+    X_train, X_test, y_train, y_test = train_test_split(feautures, label, test_size=0.40)
 
-y_pred = clf.predict(X_test)
-randf = accuracy_score(y_test, y_pred)
-print("RandomForestClassifier simple split",accuracy_score(y_test, y_pred))
-print(y_pred)
+    clf = RandomForestClassifier(max_depth=14)
+    clf.fit(X_train,y_train)
+
+    y_pred = clf.predict(X_test)
+    randf = accuracy_score(y_test, y_pred)
+    rand_mod.append(randf)
+    rand_prec.append(precision_score(y_test, y_pred, average="binary", pos_label="N"))
+    rand_rec.append(recall_score(y_test, y_pred, average="binary", pos_label="N"))
+    # print("RandomForestClassifier",accuracy_score(y_test, y_pred))
+    # print(y_test)
+    # print(y_pred)
+    # print(confusion_matrix(y_test, y_pred))
+
+    clf_svm = SVC(C = 3,kernel='rbf',gamma='scale')
+    clf_svm.fit(X_train,y_train)
+    svm_pred = clf_svm.predict(X_test)
+    svm_mod.append(accuracy_score(y_test, svm_pred))
+    svm_prec.append(precision_score(y_test, svm_pred, average="binary", pos_label="N"))
+    svm_rec.append(recall_score(y_test, svm_pred, average="binary", pos_label="N"))
+    print(svm_pred)
+
+iterations = list(range(1,31))
+# plotting RECALL
+fig, axs = plt.subplots(3, sharex=True, sharey=True)
+axs[0].plot(iterations, rand_rec, label = "Random Forest Recall ")
+axs[0].plot( iterations,svm_rec, label = "SVM Recall ")
+# axs[0].set_xlabel('Iterations')
+axs[0].set_title('Comparison of Recall for 30 iterations ')
+# axs[0].legend()
+# Display a figure.
+# plt.show()
+print("Random Forest Average Recall  ",sum(rand_rec)/30)
+print("SVM Average Recall  ",sum(svm_rec)/30)
+
+axs[1].plot(iterations, rand_prec, label = "Random Forest Precision  ")
+axs[1].plot( iterations,svm_prec, label = "SVM Precision ")
+# axs[1].set_xlabel('Iterations')
+axs[1].set_title('Comparison of Precision for 30 iterations')
+# axs[1].legend()
+# ax2.show()
+print("Random Forest Average Precision  ",sum(rand_prec)/30)
+print("SVM Average Precision  ",sum(svm_prec)/30)
+
+axs[2].plot(iterations, rand_mod, label = "Random Forest Accuracy")
+axs[2].plot( iterations,svm_mod, label = "SVM  Accuracy ")
+axs[2].set_xlabel('Iterations')
+axs[2].set_title('Comparison of  Accuracy for 30 iterations')
+axs[2].legend()
+plt.show()
+
+print("Random Forest Average Accuracy  ",sum(rand_mod)/30)
+print("SVM Average Accuracy  ",sum(svm_mod)/30)
+
 
 with open(r'rf.pkl','wb') as model_pkl:
-    pickle.dump(clf, model_pkl, protocol=2)
+    pickle.dump(clf_svm, model_pkl, protocol=2)
