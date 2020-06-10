@@ -131,12 +131,14 @@ def processRequest(req):
 
         if (output == 'N'):
             diagnosis = 'Normal'
+            fulfillmentText = "Your semen diagnosis seems to be  {} !".format(diagnosis)
 
         if (output == 'O'):
             diagnosis = 'Altered'
+            fulfillmentText = "One of three semen categories seems to be  {} !".format(diagnosis)
 
 
-        fulfillmentText = "The diagnosis seems to be  {} !".format(diagnosis)
+
         # log.write_log(sessionID, "Bot Says: "+fulfillmentText)
         return {
             "fulfillmentText": fulfillmentText
