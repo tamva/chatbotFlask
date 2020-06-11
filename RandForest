@@ -11,11 +11,12 @@ import matplotlib.pyplot as plt
 import pickle
 
 dig_df = pd.read_csv('C:/Users/athanasis/Desktop/Semester_B/Efarmoges/mathima/fertility_Diagnosis.csv',header=None, sep=',')
-
+print(dig_df.head(3))
+dig_df= dig_df.drop(dig_df.columns[0], axis=1)
 print(dig_df.head(3))
 print(dig_df.shape)
 
-feautures =  dig_df.iloc[:,:9]
+feautures =  dig_df.iloc[:,:8]
 label = dig_df.iloc[:,-1]
 
 rand_mod = []

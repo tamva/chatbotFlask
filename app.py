@@ -42,20 +42,20 @@ def processRequest(req):
     parameters = result.get("parameters")
 
     ######## Season
-    season = parameters.get("season")
-    print(season)
-    if season == "Winter" :
-        season = -1
-    elif season == "Spring":
-        season = -0.33
-    elif season == "Summer":
-        season = 0.33
-    elif season == "Fall":
-        season = 1
-    else:
-        season = 1
-        
-    print(season)
+    # season = parameters.get("season")
+    # print(season)
+    # if season == "Winter" :
+    #     season = -1
+    # elif season == "Spring":
+    #     season = -0.33
+    # elif season == "Summer":
+    #     season = 0.33
+    # elif season == "Fall":
+    #     season = 1
+    # else:
+    #     season = 1
+    #
+    # print(season)
     ############ Age
     age = parameters.get("age")
     if (age>18 and age<36) :
