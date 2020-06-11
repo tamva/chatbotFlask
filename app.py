@@ -118,7 +118,7 @@ def processRequest(req):
     else:
         hourssit = 1
 
-    int_features = [season, age, disease, accident, surgery, fever, alcohol, smoke, hourssit]
+    int_features = [age, disease, accident, surgery, fever, alcohol, smoke, hourssit]
 
     final_features = [np.array(int_features)]
 
